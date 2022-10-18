@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!--Bootstrap: -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  </head>
+<body>
+    <!-- navbar: -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#">e-commerce</a>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/api/products/all">Productos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/">Chat</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/api/products-test">Productos Test</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li> -->
+            </ul>
+
+            <% if(!username) { %> 
+                <form action="/api/login" class="d-flex">
+                  <button class="btn btn-outline-success m-2" type="submit">Ingresar</button>
+                </form>
+                <form action="/api/register" class="d-flex">
+                  <button class="btn btn-outline-success m-2" type="submit">Registro</button>
+                </form>
+            <% } else { %>
+                <form action="/api/carts/<%= idCart %>/products" class="d-flex">
+                  <button class="btn btn-outline-success m-2" type="submit"><i class="bi bi-cart"></i></button>
+                </form>
+                <img src="<%= avatar %>" alt="avatar" width="40px"></h1>
+                <form action="/api/logout" class="d-flex">
+                  <button class="btn btn-outline-success m-2" type="submit">Cerrar Sesion</button>
+                </form>
+            <% } %>
+          </div>
+        </div>
+    </nav>
+
+    <div class="container">
+      <div>
+          <h3>Carrito</h3>
+      </div>
+      <div>
+        <h4>Total: $<%= (totalPrice>0)?totalPrice:0 %> 
+          <form action="/api/order/<%= idCart %>" class="d-flex" method="post">
+            <button type="submit" class="btn btn-outline-success m-2" type="submit">CONFIRMAR PEDIDO</button>
+          </form>
+        </h4>
+    </div>
+      <table class="table table-striped table-hover">
+          <thead>
+              <tr>
+                  <!-- <th scope="col">ID</th> -->
+                  <th scope="col">Image</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Cantidad</th>
+              </tr>
+          </thead>
+          <tbody>
+              <% products.forEach(producto => { %>
+                  <tr>
+                      <td hidden id="idProducto" ><%= producto.id %></td>
+                      <td><img src="<%= producto.thumbnail %>" alt="" class="img-thumbnail rounded" style="width:200px"> </td>
+                      <th scope="row"><%= producto.title %></th>
+                      <td><%= producto.price %></td>
+                      <td><%= producto.quantity %></td>
+                  </tr>
+              <% }) %>
+          </tbody>
+      </table>
+
+    </div>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
